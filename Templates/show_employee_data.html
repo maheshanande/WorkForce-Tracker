@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Attendance Report</title>
+    <!-- Include Bootstrap CSS (you can change the URL to your specific Bootstrap version) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .scrollable-dates {
+            overflow-x: auto;
+        }
+
+        .table-wrapper {
+            max-height: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container text-center mt-3">
+        <h1 class="display-4">Employee Attendance Report</h1>
+        <button class="btn btn-primary" id="download-csv">Download as CSV</button>
+    </div>
+    <div class="container">
+        <div class="scrollable-dates">
+            <div class="table-wrapper">
+                <table class="table table-bordered table-responsive" id="attendance-table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <!-- Loop through dates and create column headings -->
+                            {% for date in emp_data_dict.1.attendance_data %}
+                                <th colspan="2">{{ date }}</th>
+                            {% endfor %}
+                            <th>Total Present</th>
+                            <th>Total Overtime</th>
+                            <th>Balance</th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <!-- Create subheadings for Present and Overtime under each date -->
+                            {% for date in emp_data_dict.1.attendance_data %}
+                                <th>Present</th>
+                                <th>Overtime</th>
+                            {% endfor %}
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for emp_id, emp_data in emp_data_dict.items %}
+                            <tr>
+                                <td>{{ emp_id }}</td>
+                                <td>{{ emp_data.name }}</td>
+                                <!-- Loop through dates and populate attendance data -->
+                                {% for date, att_data in emp_data.attendance_data.items %}
+                                    <td>{% if att_data.present %}{{ att_data.present }}{% else %}&nbsp;{% endif %}</td>
+                                    <td>{% if att_data.overtime %}{{ att_data.overtime }}{% else %}&nbsp;{% endif %}</td>
+                                {% endfor %}
+                                <td>{{ emp_data.total_present }}</td>
+                                <td>{{ emp_data.total_overtime }}</td>
+                                <td>{{ emp_data.balance }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Employee Attendance</title>
+    <!-- Add Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container d-flex justify-content-center">
+        <div class="col-md-6 mt-4">
+            <h1 class="mt-4">Add Salary Data</h1>
+            <form action="" method="post">
+                <!-- Personal Information -->
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="emp_id">Employee Id:</label>
+                    <input type="text" class="form-control" id="emp_id" name="emp_id" required>
+                </div>
+                <h2>Salary Information</h2>
+                <div class="form-group">
+                    <label for="emp_type">Employee Type:</label>
+                    <select class="form-control" id="emp_type" name="emp_type">
+                        <option value="security_officer">Security Officer</option>
+                        <option value="security_supervisor">Security Supervisor</option>
+                        <option value="security_guard">Security Guard</option>
+                        <option value="lady_guard">Lady Guard</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="bsal">Basic Salary:</label>
+                    <input type="number" class="form-control" id="bsal" name="bsal">
+                </div>
+                <div class="form-group">
+                    <label for="salary_type">Salary Type:</label>
+                    <select class="form-control" id="salary_type" name="salary_type">
+                        <option value="">Select Control</option>
+                        <option value="default">Default Values</option>
+                        <option value="update">Update Formula</option>
+                    </select>
+                </div>
+                <!-- take annual salary input to db hidden field -->
+                <input type="hidden" id="calculated_salary" name="calculated_salary" value="" />
+
+                <div id="result" class="alert alert-success" role="alert" style="display: none;">
+                    <h4 class="alert-heading">Calculated Salary:</h4>
+                    <p class="mb-0" id="resultText"></p>
+                </div>
+                
+                <div id="update_formula" style="display: none;">
+                    <h3>Update Salary Formula</h3>
+                    <div class="form-group">
+                        <label for="vda_val">VDA:</label>
+                        <input type="number" class="form-control" id="vda_val" name="vda_val">
+                    </div>
+                    <div class="form-group">
+                        <label for="epf_percentage">EPF %:</label>
+                        <input type="number" class="form-control" id="epf_percentage" name="epf_percentage">
+                    </div>
+                    <div class="form-group">
+                        <label for="esi_percentage">ESI %:</label>
+                        <input type="number" class="form-control" id="esi_percentage" name="esi_percentage">
+                    </div>
+                    <div class="form-group">
+                        <label for="allowance">Allowance (Uniform and PPE):</label>
+                        <input type="number" class="form-control" id="allowance" name="allowance">
+                    </div>
+                    <div class="form-group">
+                        <label for="sc_percentage">Supervising charges %:</label>
+                        <input type="number" class="form-control" id="sc_percentage" name="sc_percentage">
+                    </div>
+                    <div class="form-group">
+                        <label for="ac_percentage">Administration charge %:</label>
+                        <input type="number" class="form-control" id="ac_percentage" name="ac_percentage">
+                    </div>
+                    <!-- Add more salary components as needed -->
+                    <div>
+                        <button type="button" onclick="calculateSalary()">Calculate Salary</button>
+                        <div id="updateResult" class="alert alert-success" role="alert" style="display: none;">
+                            <h4 class="alert-heading">Calculated Salary:</h4>
+                            <p class="mb-0" id="resultText"></p>
+                        </div>
+                    </div>
+                </div>
+               
+                
+                <button type="submit" class="btn btn-primary">Salary Register</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('salary_type').addEventListener('change', function () {
+            var updateFormula = document.getElementById('update_formula');
+            if (this.value === 'update') {
+                updateFormula.style.display = 'block';
+            } else {
+                updateFormula.style.display = 'none';
+                // Calculate and display the salary based on the selected type.
+                calculateSalary();
+            }
+        });
+
+        function calculateSalary() {
+            var salaryType = document.getElementById('salary_type').value;
+            var bsal = parseFloat(document.getElementById('bsal').value) || 0;
+
+            var vdaPercentage, epfPercentage, esiPercentage, allowance, scPercentage, adminChargePercentage;
+
+            if (salaryType === 'default') {
+                vdaPercentage = 85.71;
+                epfPercentage = 13;
+                esiPercentage = 3.25;
+                allowance = 300;
+                scPercentage = 3;
+                adminChargePercentage = 8;
+            } else if (salaryType === 'update') {
+                vdaPercentage = parseFloat(document.getElementById('vda_val').value) || 0;
+                epfPercentage = parseFloat(document.getElementById('epf_percentage').value) || 0;
+                esiPercentage = parseFloat(document.getElementById('esi_percentage').value) || 0;
+                allowance = parseFloat(document.getElementById('allowance').value) || 0;
+                scPercentage = parseFloat(document.getElementById('sc_percentage').value) || 0;
+                adminChargePercentage = parseFloat(document.getElementById('ac_percentage').value) || 0;
+            }
+
+            var vda = (vdaPercentage / 100);
+            var totalA = bsal + (bsal * vda);
+            var epf = (totalA * (epfPercentage / 100));
+            var esi = (totalA * (esiPercentage / 100));
+            var totalB = totalA + epf + esi;
+            var sc = (totalB * (scPercentage / 100));
+            var totalC = sc + allowance + totalB;
+            var adminCharge = (totalC * adminChargePercentage / 100);
+            var grandTotal = Math.round(totalC + adminCharge);
+            if (salaryType === 'default') {
+                // Update the hidden input field with the calculated salary value
+                document.getElementById('calculated_salary').value = grandTotal;
+             }
+             else{
+                document.getElementById('calculated_salary').value = grandTotal;
+             }
+            displayResult(grandTotal);
+        }
+
+        function displayResult(grandTotal) {
+            var salaryType = document.getElementById('salary_type').value;
+            var resultHTML = 'Calculated Salary: ' + grandTotal;
+
+            if (salaryType === 'default') {
+                document.getElementById('result').style.display = 'block';
+                document.getElementById('result').innerHTML = resultHTML;
+            } else {
+                document.getElementById('result').style.display = 'none';
+                document.getElementById('updateResult').style.display = 'block';
+                document.getElementById('updateResult').innerHTML = resultHTML;
+            }
+        }
+
+    </script>
+</body>
+</html>

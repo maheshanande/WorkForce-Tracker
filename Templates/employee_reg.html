@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Stylish Registration Form</title>
+    <!-- Add Bootstrap CSS link -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container d-flex justify-content-center">
+        <div class="col-md-6 mt-4">
+        <h1 class="mt-4">Registration Form</h1>
+        <form action="" method="post">
+            <!-- Personal Information -->
+            {% csrf_token %} 
+            <div class="form-group">
+                <label for="id">Employee Id:</label>
+                <input type="text" class="form-control" id="emp_id" name="emp_id" required>
+            </div>
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="father_name">Father's Name:</label>
+                <input type="text" class="form-control" id="father_name" name="father_name" required>
+            </div>
+            <div class="form-group">
+                <label for="mother_name">Mother's Name:</label>
+                <input type="text" class="form-control" id="mother_name" name="mother_name" required>
+            </div>
+            <div class="form-group">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" class="form-control" id="dob" name="dob">
+            </div>
+            <div class="form-group">
+                <label for="doj">Date of Joining:</label>
+                <input type="date" class="form-control" id="doj" name="doj">
+            </div>
+            
+            <!-- Address Information -->
+            <h2>Address Information</h2>
+            <div class="form-group">
+                <label for="present_address">Present Address:</label>
+                <textarea class="form-control" id="present_address" name="present_address" rows="4"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="permanent_address">Permanent Address:</label>
+                <textarea class="form-control" id="permanent_address" name="permanent_address" rows="4"></textarea>
+            </div>
+
+            <!-- Contact Information -->
+            <h2>Contact Information</h2>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email">
+            </div>
+
+            <div class="form-group">
+                <label for="contact_number">Contact Number:</label>
+                <input type="tel" class="form-control" id="contact_number" name="contact_number">
+            </div>
+
+            <!-- Additional Information -->
+            <h2>Social Information</h2>
+            <!-- Add more fields as needed -->
+            <div class="form-group">
+                <label for="adhar">Adhar No:</label>
+                <input type="text" class="form-control" id="adhar_no" name="adhar_no" required>
+            </div>
+
+            <div class="form-group">
+                <label for="pan">PAN No:</label>
+                <input type="text" class="form-control" id="pan_no" name="pan_no" required>
+            </div>
+            <div class="form-group">
+                <label for="epf">EPF No:</label>
+                <input type="text" class="form-control" id="epf_no" name="epf_no" required>
+            </div>
+            <div class="form-group">
+                <label for="esi">ESI No:</label>
+                <input type="text" class="form-control" id="esi_no" name="esi_no" required>
+            </div>
+            
+            <!-- Banking Information -->
+            <h2>Banking Information</h2>
+            <div class="form-group">
+                <label for="name">Bank Name:</label>
+                <input type="text" class="form-control" id="name" name="bank_name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="branch">Branch:</label>
+                <input type="text" class="form-control" id="branch" name="branch" required>
+            </div>
+            <div class="form-group">
+                <label for="ac_no">A/C NO:</label>
+                <input type="text" class="form-control" id="acc_no" name="acc_no" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm_acc_no">Re-Enter A/C NO:</label>
+                <input type="text" class="form-control" id="confirm_acc_no" name="confirm_acc_no" required>
+            </div>
+            <div class="form-group">
+                <label for="ifse">IFSE Code:</label>
+                <input type="text" class="form-control" id="ifse_code" name="ifse_code" required>
+            </div>
+            <!-- Add fields for bank details, PAN, etc. -->
+
+            <!-- Health Information -->
+            <h2>Health Information</h2>
+            <!-- Add fields for health-related information -->
+            <div class="form-group">
+                <label for="BG">Blood Group:</label>
+                <input type="text" class="form-control" id="bg" name="bg" required>
+            </div>
+            <div class="form-group">
+                <label for="bp">BP:</label>
+                <input type="number" class="form-control" id="bp" name="bp" required>
+            </div>
+            <div class="form-group">
+                <label for="wght">Weight:</label>
+                <input type="number" class="form-control" placeholder="W in kg" id="weight" name="weight" required>
+            </div>
+            <div class="form-group">
+                <label for="ht">Height:</label>
+                <input type="number" class="form-control" id="height" placeholder="ht in cm" name="height" required>
+            </div>
+
+            <div class="form-group">
+                <label for="remarks">Remarks:</label>
+                <input type="text" class="form-control" id="remarks" name="remarks" required>
+            </div>
+
+            <!-- Other Information -->
+            <h2>Other Information</h2>
+            <!-- Add more fields for nationality, religion, etc. -->
+            <div class="form-group">
+                <label for="nationality">Nationality:</label>
+                <input type="text" class="form-control" id="nationality" name="nationality" required>
+            </div>
+            <div class="form-group">
+                <label for="religion">Religion:</label>
+                <input type="text" class="form-control" id="religion" name="religion" required>
+            </div>
+            <div class="form-group">
+                <label for="cat">Category:</label>
+                <input type="text" class="form-control" id="category" name="category" required>
+            </div>
+            <div class="form-group">
+                <label for="edu">Education:</label>
+                <input type="text" class="form-control" id="education" name="education" required>
+            </div>
+            <div class="form-group">
+                <label for="exp">Experience:</label>
+                <input type="text" class="form-control" id="exp" name="exp" required>
+            </div>
+            <div class="form-group">
+                <label for="lp">Last Pay:</label>
+                <input type="text" class="form-control" id="lastpay" name="lastPay" required>
+            </div>
+            
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </div>
+    </div>
+
+    <!-- Add Bootstrap JS and Popper.js scripts if needed -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
