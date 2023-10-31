@@ -26,8 +26,12 @@ urlpatterns = [
     path('login/',views.admin_login,name='logout'),
     path('Emp_reg/',views.employee_reg,name='empReg'),
     path('Attendence_marker/',views.Attendance_marker,name='attendenceMark'),
-    path('Salary_details/',views.submit_salary,name='salaryUpdate'),
+    path('Salary_details/',views.add_salary,name='salaryUpdate'),
     path('Update_employee/',views.update_employee_details,name='employeeUpdate'),
-    path('data/',views.get_employee_data,name='data')
+    path('data/',views.get_employee_data,name='data'),
+    path('Adv_data/',views.advance_payment_data,name='Advancedata'),
+    path('delete_data/',views.delete_emp,name='deleteData'),
+    path('payment_reg/',views.payment_data,name='paymentReg'),
+    path('Payment_data/',views.payment_data_view,name='paymentData'),
 
 ]

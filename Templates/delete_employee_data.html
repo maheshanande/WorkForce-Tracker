@@ -9,14 +9,13 @@
         .navbar {
         background-color: aqua;
       }
-      .navbar a {
-          margin:0; /* Remove default margin */
-        }
+      .navbar a{
+        margin: 0;
+      }
         .navbar .navbar-icon {
         width: 50px;
         height: 50px;
       }
-
     </style>
 </head>
 <body>
@@ -25,7 +24,7 @@
     </div>
     <div class="container d-flex justify-content-center">
         <div class="col-md-6 mt-4">
-        <h1 class="mt-4">Update Employee</h1>
+        <h1 class="mt-4">Delete Employee</h1>
         <h2 class="msg" style="background-color: green;">{{ message }}</h2>
         <form action="" method="post">
             <!-- Personal Information -->
@@ -34,20 +33,11 @@
                 <label for="id">Employee Id:</label>
                 <input type="text" class="form-control" id="emp_id" name="emp_id" required>
             </div>
-            <h2>Salary Information</h2>
-            <div class="form-group">
-                <label for="advDate">Advance Amount Date:</label>
-                <input type="date" class="form-control" placeholder="" id="advDate" name="advDate">
-            </div> 
-            <div class="form-group">
-                <label for="advamt">Advance Amount:</label>
-                <input type="number" class="form-control" placeholder="" id="adv_amt" name="adv_amt">
-            </div>
-            <div class="form-group">
-                <label for="stat">status:</label>
-                <input type="text" class="form-control" placeholder="" id="status" name="status">
-            </div>
-            <button type="submit" class="btn btn-primary">Update-></button>
+            
+            <button type="submit" class="btn btn-primary">Delete Employee</button>
         </form>
+        <div>
+            <!-- after delete message stylish text -->
+        </div>
     </div>
     </div>

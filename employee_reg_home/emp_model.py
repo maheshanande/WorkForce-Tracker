@@ -33,20 +33,20 @@ class Employee(models.Model):
 class EmployeeSalary(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     monthly_salary = models.IntegerField(null=True,blank=True)
+    balance_amount = models.IntegerField(null=True,blank=True)
     gross_salary_ctc = models.IntegerField(null=True,blank=True)
     employee_type = models.CharField(max_length=100)
-    
-
-    # def save(self, *args, **kwargs):
-    #     if self._state.adding and self.monthly_salary is not None and self.balance_amount is None:
-    #         self.balance_amount = self.monthly_salary
-    #     super(EmployeeSalary, self).save(*args, **kwargs)
+    charge_per_day = models.IntegerField(null=True,blank=True)
+    balance_to_pay = models.IntegerField(null=True,blank=True)
 
 class UpdateSalary(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     advance_amount = models.IntegerField(null=True,blank=True)
-    balance_amount = models.IntegerField(null=True,blank=True)
-    adv_paid_date = models.DateField(null=True, blank=False,unique=True)
+    adv_paid_date = models.DateField(null=True, blank=False)
 
+class PaymentDetail(models.Model):
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    paid_amount = models.IntegerField(null=True,blank=True)
+    paid_date = models.DateField(null=True, blank=False)
 
     

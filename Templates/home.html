@@ -6,38 +6,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">  
+    <link rel="icon" type="image/png" href="/static/nscb_icon.png">  
     <style media="screen">
-      body {
+        body {
+        background-image: url('/static/nscb_icon.png');
+        background-size: 500px 500px;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center center;
         overflow-x: hidden;
-        background-color: #080710;
-        background: rgba(244, 244, 244, 0.712);
-      }
+    }
 
-      .navbar {
-        background-color: aqua;
-      }
+    /* Add animation for the background image */
+    @keyframes fadeInBackground {
+        0% {
+            background-image: none; /* Initial state, no background */
+        }
+        100% {
+            background-image: url('/static/nscb_icon.png'); /* Fully loaded background */
+        }
+    }
 
-      .row {
+    .row {
         display: flex;
         height: auto;
         justify-content: space-around;
         align-items: center;
+        animation: fadeInButtons 0.8s ease-in 1s forwards; /* Delayed button animation */
+    }
+
+    /* Add animation for the buttons */
+    @keyframes fadeInButtons {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+      .navbar {
+          background-color: aqua;
+          padding: 10px 20px; /* Adjust the padding to increase/decrease space */
+        }
+
+        .navbar h1 {
+         margin: 0; /* Remove default margin */
+        }
+
+        .navbar a {
+          text-decoration: none;
+          color: white;
+          background-color: #007bff;
+          padding: 5px 15px; /* Adjust padding to change button size */
+          border-radius: 5px; /* Adjust the border radius */
+          margin-right: 10px; /* Adjust the spacing between buttons */
+        }
+
+        .navbar a:hover {
+          background-color: #0056b3;
+        }
+        .navbar .navbar-icon {
+        width: 50px;
+        height: 50px;
       }
 
       .btn_bg {
         text-align: center;
+        animation: fadeInButtons 1s linear forwards;
       }
 
       button {
         width: 400px;
-        height: 150px;
+        height: 120px;
         padding: 15px 30px; /* Larger button size */
         background-color: #007bff;
         color: white;
         border: none;
         cursor: pointer;
-        margin-top: 100px;
+        margin-top: 70px;
         border-radius: 10px;
         font-size: 30px;
         transition: transform 0.2s, background-color 0.2s;
@@ -50,11 +97,11 @@
     </style>
     <title>Home Page</title>
   </head>
-  <body class="background">
+  <body class="background" >
 
     <div class="navbar">
-      <h1 class="heading">NSCB Security!!!</h1>
-      <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+      <h1 class="heading"><img src="/static/nscb_icon.png"  class="navbar-icon" alt="Icon">  NSCB Security</h1>
+      <a href="{% url 'logout' %}" style="background-color: rgb(223, 31, 31);" class="btn btn-outline-primary">Logout</a>
     </div>
     <div class="row">
       <div class="btn-bg">
@@ -64,14 +111,45 @@
         <a href="{% url 'attendenceMark' %}"><button>Mark Attendence</button></a>
       </div>
       <div class="btn-bg">
-        <a href="{% url 'employeeUpdate' %}"><button>Update Employee</button></a>
+        <a href="{% url 'salaryUpdate' %}"><button>Salary Details</button></a>
       </div>
       <div class="btn-bg">
-        <a href="{% url 'salaryUpdate' %}"><button>Salary Details</button></a>
+        <a href="{% url 'employeeUpdate' %}"><button>Update Employee</button></a>
       </div>
       <div class="btn-bg">
         <a href="{% url 'data' %}"><button>View Data</button></a>
       </div>
+      <div class="btn-bg">
+        <a href="{% url 'Advancedata' %}"><button>Advance Payment Data</button></a>
+      </div>
+      <div class="btn-bg">
+        <a href="{% url 'paymentReg' %}"><button>Payment</button></a>
+      </div>
+      <div class="btn-bg">
+        <a href="{% url 'deleteData' %}"><button>Delete Employee Data</button></a>
+      </div>
+      <div class="btn-bg">
+        <a href="{% url 'paymentData' %}"><button>Payment Employee Data</button></a>
+      </div>
     </div>
   </body>
+  <script>
+    // Hide the buttons initially
+    document.addEventListener("DOMContentLoaded", function() {
+        const buttons = document.querySelectorAll(".btn-bg");
+        buttons.forEach(button => {
+            button.style.opacity = 0;
+        });
+    });
+
+    // Show the buttons after a delay (e.g., 2 seconds)
+    window.addEventListener("load", function() {
+        const buttons = document.querySelectorAll(".btn-bg");
+        buttons.forEach(button => {
+            setTimeout(function() {
+                button.style.opacity = 1;
+            }, 1000); // Delay in milliseconds (2 seconds in this example)
+        });
+    });
+</script>
 </html>
