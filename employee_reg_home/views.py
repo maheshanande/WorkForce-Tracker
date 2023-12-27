@@ -1,12 +1,13 @@
 import os
 import re
+from telnetlib import LOGOUT
 from django.db.models import Subquery, OuterRef, Max
 import csv
 from datetime import datetime, timedelta
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django.contrib.auth import authenticate,login
+from django.contrib.auth import authenticate,login,logout
 from .emp_model import Employee,EmployeeSalary,UpdateSalary,PaymentDetail
 from .attendance_reg import Attendance
 from django.contrib.auth.decorators import login_required
@@ -17,10 +18,16 @@ from reportlab.lib.units import inch
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus.flowables import KeepTogether
 
+
 # Create your views here.
 @login_required
 def Employee_reg_page(request):
     return render(request, 'home.html')
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return render(request,'home')
 
 def admin_login(request):
     if request.method == 'POST':

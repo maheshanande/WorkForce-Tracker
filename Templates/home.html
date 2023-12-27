@@ -7,10 +7,10 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">  
-    <link rel="icon" type="image/png" href="/static/nscb_icon.png">  
+    <link rel="icon" type="image/png" href="/static/images/nscb_icon.png">  
     <style media="screen">
         body {
-        background-image: url('/static/nscb_icon.png');
+        background-image: url('/static/images/nscb_icon.png');
         background-size: 500px 500px;
         background-repeat: no-repeat;
         background-attachment: fixed;
@@ -24,7 +24,7 @@
             background-image: none; /* Initial state, no background */
         }
         100% {
-            background-image: url('/static/nscb_icon.png'); /* Fully loaded background */
+            background-image: url('/static/images/nscb_icon.png'); /* Fully loaded background */
         }
     }
 
@@ -100,8 +100,8 @@
   <body class="background" >
 
     <div class="navbar">
-      <h1 class="heading"><img src="/static/nscb_icon.png"  class="navbar-icon" alt="Icon">  NSCB Security</h1>
-      <a href="{% url 'logout' %}" style="background-color: rgb(223, 31, 31);" class="btn btn-outline-primary">Logout</a>
+      <h1 class="heading"><img src="/static/images/nscb_icon.png"  class="navbar-icon" alt="Icon">  NSCB Security</h1>
+      <a href="{% url 'empReg' %}" style="background-color: rgb(223, 31, 31);" class="btn btn-outline-primary">Logout</a>
     </div>
     <div class="row">
       <div class="btn-bg">

@@ -18,12 +18,14 @@ from django.contrib import admin
 from django.urls import path
 from employee_reg_home import views
 
+app_name = 'nscb'
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
+     path('admin/', admin.site.urls),
     path('home/',views.Employee_reg_page,name='home'),
-    path('',views.admin_register, name='register'),
-    path('login/',views.admin_login,name='login'),
-    path('login/',views.admin_login,name='logout'),
+    path('signup/',views.admin_register, name='register'),
+    path('',views.admin_login,name='login'),
+    path('logout/',views.user_logout,name='logout'),
     path('Emp_reg/',views.employee_reg,name='empReg'),
     path('Attendence_marker/',views.Attendance_marker,name='attendenceMark'),
     path('Salary_details/',views.add_salary,name='salaryUpdate'),
