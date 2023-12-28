@@ -40,6 +40,7 @@ def admin_login(request):
         else:
             messages.error(request, 'Username or password incorrect!!!')
     return render(request,'login.html')
+
 def admin_register(request):
     if request.method == "POST":
         user_name = request.POST.get('username')
@@ -56,6 +57,7 @@ def admin_register(request):
         else:
             return messages.error(request,"Password doesn't match")
     return render(request,'signup.html')
+
 def employee_reg(request):
     message = ''
     if request.method == 'POST':
@@ -138,7 +140,7 @@ def Attendance_marker(request):
         ot = request.POST.get('ot')   
         employee_id = Employee.objects.get(emp_id=emp_id)
         # Convert "P" to True (Present) and "NP" to False (Absent)
-        if status == "P" or status == "NP":
+        if status == "P" or status == "NP" or status:
             attendance = Attendance(employee=employee_id, date=date, present=status, overtime=ot)
             attendance.save()
             message = "Attendance recorded successfully."
@@ -289,7 +291,10 @@ def get_employee_data(request):
         for date_data in emp_data['attendance_data'].values():
             if date_data['present'] is not None and date_data['overtime'] is not None:
                 # Use a regular expression to extract numeric values followed by 'P' or 'p'
-                total_present += date_data['present'].count('P')
+                present_values = re.findall(r'(\d+(?:\.\d+)?)P', date_data['present'])
+                print(present_values)
+                present_counts = [float(value) for value in present_values]
+                total_present += sum(present_counts)
                 overtime_values = re.findall(r'(\d+(?:\.\d+)?)P', date_data['overtime'])
                 overtime_counts = [float(value) for value in overtime_values]
                 total_overtime += sum(overtime_counts)
