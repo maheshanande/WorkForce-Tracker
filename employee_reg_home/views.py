@@ -155,20 +155,36 @@ def Attendance_marker(request):
 
 def add_salary(request):
     message = ''
+    employeetype = ''
+    gross_salary_ctc = ''
+    monthly_salary = ''
+    balance_amount = ''
+    charge_per_day = ''
     if request.method == 'POST':
         emp_id = request.POST.get('emp_id')
-        employee_type = request.POST.get('emp_type')
+        emtype = request.POST.get('emp_type')
         basic_salary = request.POST.get('bsal')
         annual_salary = request.POST.get('calculated_salary')
         per_day_amount = request.POST.get('per_day')
 
         # Retrieve the employee
         employee = Employee.objects.get(emp_id=emp_id)
-
+        employee_salaries = EmployeeSalary.objects.filter(employee=employee)
+        if employee_salaries.exists():
+            employeetype = employee_salaries.first().employee_type
+            gross_salary_ctc = employee_salaries.first().gross_salary_ctc
+            monthly_salary = employee_salaries.first().monthly_salary
+            balance_amount = employee_salaries.first().balance_amount
+            charge_per_day = employee_salaries.first().charge_per_day
+            message = 'Salary Data fetched successfully'
+        else:
+            print('No data')
+    
+        print(employeetype,gross_salary_ctc,monthly_salary,balance_amount,charge_per_day)
         # Create or update the EmployeeSalary record
         salary_detail, created = EmployeeSalary.objects.get_or_create(
             employee=employee,
-            employee_type=employee_type,
+            employee_type=emtype,
             defaults={
                 'monthly_salary': basic_salary,
                 'gross_salary_ctc': annual_salary,
@@ -188,9 +204,17 @@ def add_salary(request):
             salary_detail.charge_per_day = per_day_amount
             salary_detail.save()
             message = "Salary record updated successfully."
+    context = {
+        'message': message,
+        'type': employeetype,
+        'Salary_ctc':gross_salary_ctc,
+        'm_salary':monthly_salary,
+        'b_amount':balance_amount,
+        'charge_per_day':charge_per_day
 
+    }
 
-    return render(request, 'salary_details.html', {'message': message})
+    return render(request, 'salary_details.html', context)
 
 
 def update_employee_details(request):

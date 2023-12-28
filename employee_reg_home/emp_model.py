@@ -35,7 +35,7 @@ class EmployeeSalary(models.Model):
     monthly_salary = models.IntegerField(null=True,blank=True)
     balance_amount = models.IntegerField(null=True,blank=True)
     gross_salary_ctc = models.IntegerField(null=True,blank=True)
-    employee_type = models.CharField(max_length=100)
+    employee_type = models.CharField(null=True, max_length=100)
     charge_per_day = models.IntegerField(null=True,blank=True)
     balance_to_pay = models.IntegerField(null=True,blank=True)
 
