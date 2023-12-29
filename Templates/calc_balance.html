@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Attendance Report</title>
+    <!-- Include Bootstrap CSS (you can change the URL to your specific Bootstrap version) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .navbar {
+        background-color: aqua;
+      }
+      .navbar a {
+          margin:0; /* Remove default margin */
+        }
+        .navbar .navbar-icon {
+        width: 50px;
+        height: 50px;
+      }
+
+    </style>
+</head>
+<body>
+    <div class="navbar"> 
+        <a href="{% url 'home' %}"> <h1 class="heading"><img src="/static/images/nscb_icon.png"  class="navbar-icon" alt="Icon">  NSCB Security</h1> </a>
+    </div>
+    <div class="container text-center mt-3">
+        <h1 class="display-4">Calculate Net Balance</h1>
+        <form id="filter-form" method="POST">
+            {% csrf_token %} {# Include CSRF token in your form #}
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="month-filter">Filter by Month:</label>
+                    <select id="month-filter" name="month" class="form-control">
+                        <option value="">Select Month</option>
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                        <!-- Add options for other months -->
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="year-input">Enter a Year:</label>
+                    <input type="number" id="year_input" name="year" min="1900" max="2099" step="1" placeholder="YYYY" class="form-control">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="filter-button" style="visibility: hidden;">Filter</label>
+                    <button class="btn btn-primary form-control" id="filter-button">Filter</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="container mt-3">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped mx-auto" id="advance_amt-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Net Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for id, data in data_dict.items %}
+                        <tr>
+                            <td>{{ id }}</td>
+                            <td>{{ data.Name }}</td>
+                            <td>{{ data.Net_Balance_Amount }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

@@ -21,7 +21,7 @@ from employee_reg_home import views
 app_name = 'nscb'
 
 urlpatterns = [
-     path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('home/',views.Employee_reg_page,name='home'),
     path('signup/',views.admin_register, name='register'),
     path('',views.admin_login,name='login'),
@@ -29,11 +29,12 @@ urlpatterns = [
     path('Emp_reg/',views.employee_reg,name='empReg'),
     path('Attendence_marker/',views.Attendance_marker,name='attendenceMark'),
     path('Salary_details/',views.add_salary,name='salaryUpdate'),
-    path('Update_employee/',views.update_employee_details,name='employeeUpdate'),
+    path('Update_employee/',views.update_salary_data,name='employeeUpdate'),
     path('data/',views.get_employee_data,name='data'),
     path('Adv_data/',views.advance_payment_data,name='Advancedata'),
     path('delete_data/',views.delete_emp,name='deleteData'),
     path('payment_reg/',views.payment_data,name='paymentReg'),
     path('Payment_data/',views.payment_data_view,name='paymentData'),
+    path('calculate_balance_amount/',views.calculate_balance_amount,name='calcpay'),
 
 ]

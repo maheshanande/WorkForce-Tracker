@@ -37,12 +37,17 @@ class EmployeeSalary(models.Model):
     gross_salary_ctc = models.IntegerField(null=True,blank=True)
     employee_type = models.CharField(null=True, max_length=100)
     charge_per_day = models.IntegerField(null=True,blank=True)
-    balance_to_pay = models.IntegerField(null=True,blank=True)
 
 class UpdateSalary(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     advance_amount = models.IntegerField(null=True,blank=True)
     adv_paid_date = models.DateField(null=True, blank=False)
+
+class balanceAmount(models.Model):
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    balance_to_pay = models.IntegerField(null=True,blank=True)
+    balance_reg_date = models.DateField(null=True, blank=False)
+
 
 class PaymentDetail(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)

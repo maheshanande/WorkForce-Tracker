@@ -126,13 +126,16 @@
         <a href="{% url 'paymentReg' %}"><button>Payment</button></a>
       </div>
       <div class="btn-bg">
-        <a href="{% url 'deleteData' %}"><button>Delete Employee Data</button></a>
+        <a href="{% url 'calcpay' %}"><button>Net Balance Amount</button></a>
       </div>
       <div class="btn-bg">
         <a href="{% url 'paymentData' %}"><button>Payment Employee Data</button></a>
       </div>
+      <div class="btn-bg">
+        <a href="{% url 'deleteData' %}"><button>Delete Employee Data</button></a>
+      </div>
     </div>
-  </body>
+
   <script>
     // Hide the buttons initially
     document.addEventListener("DOMContentLoaded", function() {
@@ -152,4 +155,5 @@
         });
     });
 </script>
+</body>
 </html>
