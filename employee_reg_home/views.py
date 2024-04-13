@@ -183,31 +183,31 @@ def add_salary(request):
             message = 'Salary Data fetched successfully'
         else:
             print('No data')
-    
-        print(employeetype,gross_salary_ctc,monthly_salary,balance_amount,charge_per_day)
-        # Create or update the EmployeeSalary record
-        salary_detail, created = EmployeeSalary.objects.get_or_create(
-            employee=employee,
-            employee_type=emtype,
-            defaults={
-                'monthly_salary': basic_salary,
-                'gross_salary_ctc': annual_salary,
-                "balance_amount":basic_salary,
-                'charge_per_day':per_day_amount
-            }
-        )
+        if emtype is not None and annual_salary is not None and basic_salary is not None and per_day_amount is not None:
+            print(employeetype,gross_salary_ctc,monthly_salary,balance_amount,charge_per_day)
+            # Create or update the EmployeeSalary record
+            salary_detail, created = EmployeeSalary.objects.get_or_create(
+                employee=employee,
+                employee_type=emtype,
+                defaults={
+                    'monthly_salary': basic_salary,
+                    'gross_salary_ctc': annual_salary,
+                    "balance_amount":basic_salary,
+                    'charge_per_day':per_day_amount
+                }
+            )
 
-        if created:
-            message = "New salary record created successfully."
-            
-        else:
-            # Update the existing record
-            salary_detail.monthly_salary = basic_salary
-            salary_detail.gross_salary_ctc = annual_salary
-            salary_detail.balance_amount = basic_salary
-            salary_detail.charge_per_day = per_day_amount
-            salary_detail.save()
-            message = "Salary record updated successfully."
+            if created:
+                message = "New salary record created successfully."
+                
+            else:
+                # Update the existing record
+                salary_detail.monthly_salary = basic_salary
+                salary_detail.gross_salary_ctc = annual_salary
+                salary_detail.balance_amount = basic_salary
+                salary_detail.charge_per_day = per_day_amount
+                salary_detail.save()
+                message = "Salary record updated successfully."
     context = {
         'message': message,
         'type': employeetype,
@@ -249,7 +249,7 @@ def update_salary_data(request):
             employer_salary.save()
             message = 'Data recorded successfully!!!'
         # Create a new instance of UpdateSalary for each update
-        update_salary = UpdateSalary(
+        update_salary = UpdateSalary.objects.create(
             employee=employee,
             advance_amount=advance_amount,
             adv_paid_date=paid_date
@@ -358,26 +358,33 @@ def get_employee_data(request):
         emp_data['total_overtime'] = total_overtime
         emp_data['balance'] = total_balance
 
-    # create date list
-    date_list = list(emp_data_dict['1']['attendance_data'].keys())
-    print(date_list)
+    # Initialize an empty set to store all dates
     all_dates = set()
-    # add all the dates to all the keys if the date is not present
+
+    # Iterate through all employees and update the set with dates
     for emp_data in emp_data_dict.values():
         all_dates.update(emp_data['attendance_data'].keys())
 
-    for emp_id, emp_data in emp_data_dict.items():
+    # Find the employee with the most dates
+    employee_with_most_dates = max(emp_data_dict.values(), key=lambda x: len(x['attendance_data']))
+
+    # Set all_dates to the dates of the employee with the most dates
+    all_dates = set(employee_with_most_dates['attendance_data'].keys())
+
+    # Fill missing dates for all employees
+    for emp_data in emp_data_dict.values():
         for date in all_dates:
             if date not in emp_data['attendance_data']:
                 emp_data['attendance_data'][date] = {
                     'present': None,
                     'overtime': None
                 }
-    # Sort the attendance data for each employee by date in ascending order
-    for emp_id, emp_data in emp_data_dict.items():
+
+    # Sort attendance data by date for all employees
+    for emp_data in emp_data_dict.values():
         sorted_attendance_data = sorted(emp_data['attendance_data'].items(), key=lambda x: x[0])
         emp_data['attendance_data'] = dict(sorted_attendance_data)
-    print(emp_data_dict)
+        print(emp_data_dict)
 
    # Create a CSV file
     desktop_dir = os.path.join(os.path.expanduser("~"), "Desktop")
@@ -392,7 +399,7 @@ def get_employee_data(request):
 
     # Create the header row
     header_row = ["ID", "Name"]
-    unique_dates = emp_data_dict['1']['attendance_data'].keys()
+    unique_dates = all_dates
 
     for date in unique_dates:
         day_number = date.split('-')[2]
