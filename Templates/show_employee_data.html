@@ -79,8 +79,12 @@
                             <th>ID</th>
                             <th>Name</th>
                             <!-- Loop through dates and create column headings -->
-                            {% for date, att_data in emp_data_dict.1.attendance_data.items %}
-                                <th colspan="2">{{ date }}</th>
+                            {% for emp_id, emp_data in emp_data_dict.items %}
+                                {% if forloop.first %}  {# Check if it's the first employee #}
+                                    {% for date, att_data in emp_data.attendance_data.items %}
+                                        <th colspan="2">{{ date }}</th>
+                                    {% endfor %}
+                                {% endif %}
                             {% endfor %}
                             <th>Total Present</th>
                             <th>Total Overtime</th>
@@ -90,9 +94,13 @@
                             <th></th>
                             <th></th>
                             <!-- Create subheadings for Present and Overtime under each date -->
-                            {% for date in emp_data_dict.1.attendance_data %}
-                                <th>Present</th>
-                                <th>Overtime</th>
+                            {% for emp_id, emp_data in emp_data_dict.items %}
+                                {% if forloop.first %}  {# Check if it's the first employee #}
+                                    {% for date in emp_data.attendance_data.items %}
+                                    <th>Present</th>
+                                    <th>Overtime</th>
+                                    {% endfor %}
+                                {% endif %}
                             {% endfor %}
                             <th></th>
                             <th></th>
